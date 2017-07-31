@@ -38,5 +38,8 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+## Firebase setup
+Get the credentials from firebase console, then create a config-secret.json file inside src/config folder with the same attributes of config-secret.ts interface (from the same folder).
+
 ## Contact
 * If you want to contribute to this project, new features are accepted through pull request, and please contact me fabtics@gmail.com
