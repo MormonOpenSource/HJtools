@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController } from 'ionic-angular';
-import { NewEntriesPage } from '../new-entries/new-entries';
+import { ModalController, NavController, AlertController, ActionSheetController } from 'ionic-angular';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { NewAttendancePage } from '../new-attendance/new-attendance';
+import { NewAgendaPage } from '../new-agenda/new-agenda';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the AttendancePage page.
@@ -15,11 +19,43 @@ import { NewEntriesPage } from '../new-entries/new-entries';
 })
 export class AttendancePage {
 
-  constructor(public navCtrl: NavController, private modalCtrl: ModalController) {
+  private attendance: FirebaseListObservable<any>
+
+  constructor(public navCtrl: NavController,
+    private modalCtrl: ModalController,
+    private db: AngularFireDatabase,
+    private alertCtrl: AlertController,
+    private actionSheetCtrl: ActionSheetController) {
+
+    this.attendance = db.list('/attendance').map((agendas) => {
+      return agendas.reverse();
+    }) as FirebaseListObservable<any>;
   }
 
   newEntry() {
-      this.modalCtrl.create(NewEntriesPage).present();
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Agregar nueva',
+      buttons: [
+        {
+          text: 'Agenda',
+          handler: () => {
+            this.navCtrl.push(NewAgendaPage); 
+          }
+        }, {
+          text: 'Asistencia',
+          handler: () => {
+            this.navCtrl.push(NewAttendancePage);
+          }
+        }, {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
-
 }
+

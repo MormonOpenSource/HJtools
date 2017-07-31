@@ -9,10 +9,12 @@ The main purpose of this app is to organize the general meetings, goals, thought
 ## Current features
 * List of agendas (Sunday school)
 * Create/delete/update agendas
+* list of attendance (Sunday school, Mutual, Quorum)
+* Create attendance
 
 ## TODO
-* list of attendance (Sunday school, Mutual)
-* Create/delete/update attendance
+
+* delete/update attendance
 
 ## How to use this template
 

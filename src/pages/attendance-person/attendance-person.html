@@ -1,0 +1,42 @@
+<!--
+  Generated template for the AttendancePersonPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>
+      Agregar joven
+    </ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="onDismiss()"><ion-icon name="close"></ion-icon></button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="person" (ngSubmit)="savePerson()">
+    <ion-item>
+      <ion-label stacked>Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Apellido</ion-label>
+      <ion-input type="text" formControlName="apellido"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>
+          Oficio
+        </ion-label>
+        <ion-select formControlName="oficio">
+          <ion-option value="diacono">Diacono</ion-option>
+          <ion-option value="maestro">Maestro</ion-option>
+          <ion-option value="presbitero">Presbitero</ion-option>
+          <ion-option value="otro">Investigador</ion-option>
+        </ion-select>
+      </ion-item>
+    <button ion-button type="submit" [disabled]="!person.valid">Guardar joven</button>
+  </form>
+</ion-content>

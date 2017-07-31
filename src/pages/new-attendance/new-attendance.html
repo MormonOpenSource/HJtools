@@ -14,5 +14,42 @@
 
 
 <ion-content padding>
-
+  <form [formGroup]="attendance" (ngSubmit)="submitAttendance()">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Fecha</ion-label>
+        <ion-input type="date" formControlName="date"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          Tipo de reunión
+        </ion-label>
+        <ion-select formControlName="typeMetting">
+          <ion-option value="clase domingo">Clase del domingo</ion-option>
+          <ion-option value="mutual">Mutual</ion-option>
+          <ion-option value="reunion quorum">Reunión de quorum</ion-option>
+          <ion-option value="otro">Otro</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item-sliding *ngFor="let person of listAttendance; let i = index">
+        <ion-item>
+          <h2>{{ person.nombre }} {{ person.apellido }}</h2>
+          <h3>{{ person.oficio }}</h3>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="deletePerson(i)" type="button">
+          <ion-icon name="md-trash"> Eliminar</ion-icon>
+        </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <button ion-button color="secondary" (click)="addPerson()" type="button" small>
+      <ion-icon name="add"></ion-icon> Agregar joven      
+    </button>
+    <button ion-button type="submit" [disabled]="!attendance.valid || listAttendance.length === 0">
+      Guardar asistencia
+    </button>
+  </form>
 </ion-content>
