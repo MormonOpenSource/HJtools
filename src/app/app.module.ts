@@ -7,7 +7,6 @@ import { AgendasPage } from '../pages/agendas/agendas';
 import { AttendancePage } from '../pages/attendance/attendance';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { NewEntriesPage } from '../pages/new-entries/new-entries';
 import { NewAttendancePage } from '../pages/new-attendance/new-attendance';
 import { NewAgendaPage } from '../pages/new-agenda/new-agenda';
 import { ViewAgendasPage } from '../pages/view-agendas/view-agendas';
