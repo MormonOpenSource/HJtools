@@ -1,0 +1,88 @@
+<!--
+  Generated template for the UpdateAgendaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Actualizar agenda</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="agenda" (ngSubmit)="updateAgenda()">     
+    <ion-item>
+      <ion-label stacked>Preside</ion-label>
+      <ion-input type="text" formControlName="preside"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Fecha</ion-label>
+      <ion-input type="date" formControlName="fecha"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Dirige (Miembro de la presidencia de quorum)</ion-label>
+      <ion-input type="text" formControlName="dirige"></ion-input>
+    </ion-item>
+    <ion-item-group>
+    <ion-item-divider color="light">Asuntos</ion-item-divider>
+    <ion-item>
+      <ion-label stacked>Tratar asuntos (actividades, acontecimientos, asignaciones, oportunidades de ministrar)</ion-label>
+      <ion-textarea formControlName="asuntos"></ion-textarea>
+    </ion-item>
+    </ion-item-group>
+    <ion-item-group>
+    <div formGroupName="deberes">
+      <ion-item-divider color="light">Deberes</ion-item-divider>
+      <ion-label stacked>Enseñar los deberes (explicar y deliberar en consejo en cuanto a cómo cumplir los deberes del sacerdocio)</ion-label>
+      <ion-item>
+        <ion-label stacked>Nombre joven/lider</ion-label>
+        <ion-input formControlName="nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Resumen</ion-label>
+        <ion-input formControlName="resumen"></ion-input>
+      </ion-item>
+    </div>
+    </ion-item-group>
+    <ion-item-group>
+    <div formGroupName="experiencia">
+      <ion-item-divider color="light">Experiencia</ion-item-divider>
+      <ion-label stacked>Invitar a compartir (¿Qué experiencias están teniendo los miembros del cuórum?</ion-label>
+      <ion-item>
+        <ion-label stacked>Nombre joven/lider</ion-label>
+        <ion-input formControlName="nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Resumen</ion-label>
+        <ion-input formControlName="resumen"></ion-input>
+      </ion-item>
+    </div>
+    </ion-item-group>        
+    <ion-item-group>
+    <ion-item-divider color="light">Clase</ion-item-divider>
+    <ion-item>
+      <ion-label stacked>Titulo de la clase</ion-label>
+      <ion-input type="text" formControlName="tituloClase"></ion-input>
+    </ion-item>
+    <div formGroupName="clase">
+      <ion-item>
+        <ion-label stacked>Nombre del maestro de la clase</ion-label>
+        <ion-input formControlName="nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Resumen de la clase</ion-label>
+        <ion-input formControlName="resumen"></ion-input>
+      </ion-item>
+    </div>
+    </ion-item-group>
+    <ion-item>
+      <ion-label stacked>Ultima oración</ion-label>
+      <ion-input formControlName="ultimaOracion"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" [disabled]="!agenda.valid">Actualizar agenda</button>
+  </form>
+</ion-content>

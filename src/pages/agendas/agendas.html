@@ -1,0 +1,38 @@
+<!--
+  Generated template for the AgendasPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="newEntry()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Agendas</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let agenda of agendas | async">
+      <ion-item (click)="agendaSelected(agenda)">
+        <h2>{{ agenda.fecha }}</h2>
+        <h3>{{ agenda.tituloClase }}</h3>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="secondary" (click)="editAgenda(agenda)">
+          <ion-icon name="md-create"> Editar</ion-icon>
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button color="danger" (click)="deleteAgenda(agenda.$key)">
+          <ion-icon name="md-trash"> Eliminar</ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
