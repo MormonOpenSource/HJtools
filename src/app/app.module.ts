@@ -12,6 +12,7 @@ import { NewAgendaPage } from '../pages/new-agenda/new-agenda';
 import { ViewAgendasPage } from '../pages/view-agendas/view-agendas';
 import { UpdateAgendaPage } from '../pages/update-agenda/update-agenda'
 import { AttendancePersonPage } from '../pages/attendance-person/attendance-person'
+import { ViewAttendancePage } from '../pages/view-attendance/view-attendance';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +37,8 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     ViewAgendasPage,
     UpdateAgendaPage,
     AttendancePersonPage,
-    ReversePipe
+    ReversePipe,
+    ViewAttendancePage,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     NewAgendaPage,
     UpdateAgendaPage,
     ViewAgendasPage,
-    AttendancePersonPage
+    AttendancePersonPage,
+    ViewAttendancePage
   ],
   providers: [
     StatusBar,

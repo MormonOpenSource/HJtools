@@ -1,0 +1,40 @@
+<!--
+  Generated template for the ViewAttendancePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ attendance.date }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <ion-label stacked>Fecha:</ion-label>
+        <p>{{attendance.date}}</p>
+      </ion-col>
+      <ion-col col-6>
+        <ion-label stacked>Tipo reunión:</ion-label>
+        <p>{{attendance.typeMetting}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-label stacked>Asistencia:</ion-label>
+        <ion-list>
+          <ion-item *ngFor="let person of attendance.people">
+            <span>{{person.nombre}} {{person.apellido}}</span>
+            <strong item-end>{{person.oficio}}</strong>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

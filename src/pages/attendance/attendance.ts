@@ -3,6 +3,7 @@ import { ModalController, NavController, AlertController, ActionSheetController 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { NewAttendancePage } from '../new-attendance/new-attendance';
 import { NewAgendaPage } from '../new-agenda/new-agenda';
+import { ViewAttendancePage } from '../view-attendance/view-attendance';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 
@@ -57,5 +58,12 @@ export class AttendancePage {
     });
     actionSheet.present();
   }
+
+  attendanceSelected(attendance): void {
+    this.navCtrl.push(ViewAttendancePage, {
+      attendance: attendance
+    });
+  }
+
 }
 
