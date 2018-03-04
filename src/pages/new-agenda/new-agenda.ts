@@ -22,6 +22,7 @@ export class NewAgendaPage {
   constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private db: AngularFireDatabase) {
     this.newAgenda = db.list('/agendas');  
     this.agenda = this.formBuilder.group({
+      tipoAgenda: ['diaconos', Validators.required],
       preside: ['', Validators.required],
       fecha: ['', Validators.required],
       dirige: ['', Validators.required],

@@ -28,6 +28,7 @@ export class UpdateAgendaPage {
     this.agendas = db.list('/agendas');
     this.agendaSelected = this.navParams.get('agenda');
     this.agenda = this.formBuilder.group({
+      tipoAgenda: [this.agendaSelected.tipoAgenda, Validators.required],
       preside: [this.agendaSelected.preside, Validators.required],
       fecha: [this.agendaSelected.fecha, Validators.required],
       dirige: [this.agendaSelected.dirige, Validators.required],

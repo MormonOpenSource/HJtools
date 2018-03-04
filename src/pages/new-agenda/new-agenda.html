@@ -14,7 +14,17 @@
 
 
 <ion-content padding>
-  <form [formGroup]="agenda" (ngSubmit)="saveAgenda()">     
+  <form [formGroup]="agenda" (ngSubmit)="saveAgenda()">
+    <ion-item>
+      <ion-label stacked>
+        Quorum
+      </ion-label>
+      <ion-select formControlName="tipoAgenda">
+        <ion-option value="diaconos">Diaconos</ion-option>
+        <ion-option value="maestros">Maestros</ion-option>
+        <ion-option value="presbiteros">Presbiteros</ion-option>
+      </ion-select>
+    </ion-item>
     <ion-item>
       <ion-label stacked>Preside</ion-label>
       <ion-input type="text" formControlName="preside"></ion-input>

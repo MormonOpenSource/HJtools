@@ -15,13 +15,13 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="getFilteredItems()"></ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let agenda of agendas | async">
+    <ion-item-sliding *ngFor="let agenda of filteredItems">
       <ion-item (click)="agendaSelected(agenda)">
-        <h2>{{ agenda.fecha }}</h2>
-        <h3>{{ agenda.tituloClase }}</h3>
+        <h2><strong>{{ agenda?.tituloClase }}</strong></h2>
+        <h4>{{ agenda?.fecha }} - {{agenda?.tipoAgenda}}</h4>        
       </ion-item>
       <ion-item-options side="right">
         <button ion-button color="secondary" (click)="editAgenda(agenda)">
