@@ -1,5 +1,5 @@
 # HJtools
-The main purpose of this app is to organize the general meetings, goals, thoughts and so on, of the young man organization
+The main purpose of this app is to organize the general meetings, goals, thoughts and so on, of the young men organization
 
 ## Technologies
 * Angular 4

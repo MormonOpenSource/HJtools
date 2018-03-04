@@ -13,11 +13,14 @@ import { ViewAgendasPage } from '../pages/view-agendas/view-agendas';
 import { UpdateAgendaPage } from '../pages/update-agenda/update-agenda'
 import { AttendancePersonPage } from '../pages/attendance-person/attendance-person'
 import { ViewAttendancePage } from '../pages/view-attendance/view-attendance';
+import { LoginPage } from './../pages/login/login';
+import { RegisterPage } from './../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { ReversePipe } from '../pipes/reverse-list.pipe'
 import { ConfigSecret } from  '../config/config-secret'
@@ -39,12 +42,15 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     AttendancePersonPage,
     ReversePipe,
     ViewAttendancePage,
+    LoginPage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,7 +64,9 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     UpdateAgendaPage,
     ViewAgendasPage,
     AttendancePersonPage,
-    ViewAttendancePage
+    ViewAttendancePage,
+    LoginPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,

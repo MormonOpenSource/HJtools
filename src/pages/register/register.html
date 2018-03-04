@@ -1,0 +1,70 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Registro</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="register" (ngSubmit)="registerUser()">
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="text" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Contraseña</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Apellido</ion-label>
+      <ion-input type="text" formControlName="lastName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>
+        Quorum
+      </ion-label>
+      <ion-select formControlName="quorum">
+        <ion-option value="diaconos">Diaconos</ion-option>
+        <ion-option value="maestros">Maestros</ion-option>
+        <ion-option value="presbiteros">Presbiteros</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>
+        Estaca
+      </ion-label>
+      <ion-select formControlName="stake">
+        <ion-option value="bogota">Bogotá</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>
+        Barrio
+      </ion-label>
+      <ion-select formControlName="ward">
+        <ion-option value="federman">Federman</ion-option>
+        <ion-option value="alhambra">Alhambra</ion-option>
+        <ion-option value="niza">Niza</ion-option>
+        <ion-option value="tierralinda">Tierra linda</ion-option>
+        <ion-option value="nogal">Nogal</ion-option>
+        <ion-option value="sanluis">San luis</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <button ion-button type="submit" [disabled]="!register.valid" >Registarme</button>
+  </form>
+</ion-content>
