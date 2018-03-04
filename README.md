@@ -11,10 +11,14 @@ The main purpose of this app is to organize the general meetings, goals, thought
 * Create/delete/update agendas
 * list of attendance (Sunday school, Mutual, Quorum)
 * Create attendance
+* Search filter for agendas and attendance list
 
 ## TODO
 
-* delete/update attendance
+* Delete/update attendance
+* Authentication for Young men and leaders
+* Role permissions to edit and delete depending on user
+* Assign user to a ward and stake
 
 ## How to use this template
 
