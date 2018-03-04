@@ -21,6 +21,8 @@ import 'rxjs/add/operator/map';
 export class AttendancePage {
 
   private attendance: FirebaseListObservable<any>
+  private filteredItems: Array<any>;
+  private searchTerm: String;
 
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
@@ -31,6 +33,9 @@ export class AttendancePage {
     this.attendance = db.list('/attendance').map((agendas) => {
       return agendas.reverse();
     }) as FirebaseListObservable<any>;
+
+    this.searchTerm = '';
+    this.getFilteredItems();
   }
 
   newEntry() {
@@ -62,6 +67,22 @@ export class AttendancePage {
   attendanceSelected(attendance): void {
     this.navCtrl.push(ViewAttendancePage, {
       attendance: attendance
+    });
+  }
+
+  getFilteredItems() {
+    let seachTerm = this.searchTerm
+    // use subscribe and foreach for filtering
+    this.attendance.subscribe((_items) => {
+      this.filteredItems = [];
+      _items.forEach(item => {
+        if (item.date && item.typeMetting) {
+          let validDate = item.date.toLowerCase().indexOf(seachTerm.toLowerCase()) > -1;
+          let validTypeMetting = item.typeMetting.toLowerCase().indexOf(seachTerm.toLowerCase()) > -1;
+          if (validDate || validTypeMetting)
+            this.filteredItems.push(item);
+        }
+      })
     });
   }
 

@@ -19,8 +19,9 @@
 
 
 <ion-content padding>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="getFilteredItems()"></ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let attendance of attendance | async">
+    <ion-item-sliding *ngFor="let attendance of filteredItems">
       <ion-item (click)="attendanceSelected(attendance)">
         <h2>{{ attendance.date }}</h2>
         <h3>{{ attendance.typeMetting }}</h3>
