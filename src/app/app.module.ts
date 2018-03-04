@@ -15,6 +15,7 @@ import { AttendancePersonPage } from '../pages/attendance-person/attendance-pers
 import { ViewAttendancePage } from '../pages/view-attendance/view-attendance';
 import { LoginPage } from './../pages/login/login';
 import { RegisterPage } from './../pages/register/register';
+import { PermissionsPage } from './../pages/permissions/permissions';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -43,7 +44,8 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     ReversePipe,
     ViewAttendancePage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    PermissionsPage
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,8 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     AttendancePersonPage,
     ViewAttendancePage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    PermissionsPage
   ],
   providers: [
     StatusBar,

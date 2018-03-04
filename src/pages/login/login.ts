@@ -23,7 +23,12 @@ export class LoginPage {
   constructor(private fire: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    var user = this.fire.auth.currentUser;
+    if (user) {
+      this.navCtrl.setRoot(TabsPage);
+    }
+  }
 
   async login(user: UserLogin) {
     try {
