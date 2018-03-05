@@ -28,12 +28,7 @@ export class LoginPage {
     public alertCtrl: AlertController) {
   }
 
-  ionViewDidLoad() {
-    var user = this.fire.auth.currentUser;
-    if (user) {
-      this.navCtrl.setRoot(TabsPage);
-    }
-  }
+  ionViewDidLoad() {}
 
   createLoader(message: string = "Por favor espera...") { // Optional Parameter
     this.loading = this.loadingCtrl.create({
