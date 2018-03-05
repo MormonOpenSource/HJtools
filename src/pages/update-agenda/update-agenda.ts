@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {  AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { AgendasPage } from '../agendas/agendas';
 
 /**
@@ -17,7 +17,7 @@ import { AgendasPage } from '../agendas/agendas';
 })
 export class UpdateAgendaPage {
   private agenda: FormGroup;
-  private agendas: FirebaseListObservable<any>;
+  private agendas: AngularFireList<any>;
   private agendaSelected;
 
   constructor(public navCtrl: NavController, 

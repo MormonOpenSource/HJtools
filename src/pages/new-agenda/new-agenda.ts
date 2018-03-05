@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { AgendasPage } from '../agendas/agendas';
 
 /**
@@ -17,7 +17,7 @@ import { AgendasPage } from '../agendas/agendas';
 })
 export class NewAgendaPage {
   private agenda: FormGroup;
-  private newAgenda: FirebaseListObservable<any>;
+  private newAgenda: AngularFireList<any>;
 
   constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private db: AngularFireDatabase) {
     this.newAgenda = db.list('/agendas');  

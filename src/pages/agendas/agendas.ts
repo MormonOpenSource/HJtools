@@ -2,10 +2,13 @@ import { Component } from '@angular/core';
 import { ModalController, NavController, AlertController, ActionSheetController } from 'ionic-angular';
 import { ViewAgendasPage } from '../view-agendas/view-agendas';
 import { UpdateAgendaPage } from '../update-agenda/update-agenda'
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireAuth } from 'angularfire2/auth'
 import { NewAttendancePage } from '../new-attendance/new-attendance';
 import { NewAgendaPage } from '../new-agenda/new-agenda';
-import 'rxjs/add/operator/mergeMap';
+import { PermissionsPage } from './../permissions/permissions';
 import 'rxjs/add/operator/map';
 
 
@@ -22,20 +25,60 @@ import 'rxjs/add/operator/map';
 })
 export class AgendasPage {
 
-  private agendas: FirebaseListObservable<any>
+  private agendasItems: AngularFireList<any>;
+  private agendas: Observable<any[]>;
   private filteredItems: Array<any>;
   private searchTerm: String;
+  private buttonsNewEntry: Array<any>;
 
 
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
     private db: AngularFireDatabase,
     private alertCtrl: AlertController,
-    private actionSheetCtrl: ActionSheetController) {
+    private actionSheetCtrl: ActionSheetController,
+    private fire: AngularFireAuth) {
 
-    this.agendas = db.list('/agendas').map((agendas) => { 
-      return agendas.reverse(); 
-    }) as FirebaseListObservable<any>;
+    this.buttonsNewEntry = [
+      {
+        text: 'Agenda',
+        handler: () => {
+          this.navCtrl.push(NewAgendaPage);
+        }
+      }, {
+        text: 'Asistencia',
+        handler: () => {
+          this.navCtrl.push(NewAttendancePage);
+        }
+      },
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        handler: () => {
+
+        }
+      },
+      {
+        text: 'Asignar permisos',
+        handler: () => {
+          this.navCtrl.push(PermissionsPage);
+        }
+      }
+    ]
+    var user = this.fire.auth.currentUser;
+    /* if (user) {
+      db.object('/users', { query: { equalTo: {value: user.uid, key: 'uid'} }})
+        .subscribe((_items) => {
+        console.log(_items)
+        })
+      //if()
+      //this.navCtrl.setRoot(TabsPage);
+    } */
+    this.agendasItems = db.list('/agendas');
+    this.agendas = this.agendasItems.snapshotChanges().map((agendas) => {
+      return agendas.reverse();
+    })
+
 
     this.searchTerm = '';
     this.getFilteredItems()
@@ -44,25 +87,7 @@ export class AgendasPage {
   newEntry(): void {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Agregar nueva',
-      buttons: [
-        {
-          text: 'Agenda',
-          handler: () => {
-            this.navCtrl.push(NewAgendaPage); 
-          }
-        }, {
-          text: 'Asistencia',
-          handler: () => {
-            this.navCtrl.push(NewAttendancePage);
-          }
-        }, {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            
-          }
-        }
-      ]
+      buttons: this.buttonsNewEntry
     });
     actionSheet.present();
   }
@@ -87,8 +112,8 @@ export class AgendasPage {
         },
         {
           text: 'eliminar',
-          handler: () =>{
-            this.agendas.remove(agendaId);
+          handler: () => {
+            this.agendasItems.remove(agendaId);
           }
         }
       ]
@@ -105,7 +130,7 @@ export class AgendasPage {
   getFilteredItems() {
     let seachTerm = this.searchTerm
     // use subscribe and foreach for filtering
-    this.agendas.subscribe((_items) => {
+    this.agendasItems.valueChanges().subscribe((_items:any) => {
       this.filteredItems = [];
       _items.forEach(item => {
         if (item.tipoAgenda) {

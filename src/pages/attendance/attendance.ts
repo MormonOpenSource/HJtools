@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ModalController, NavController, AlertController, ActionSheetController } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList} from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
 import { NewAttendancePage } from '../new-attendance/new-attendance';
 import { NewAgendaPage } from '../new-agenda/new-agenda';
 import { ViewAttendancePage } from '../view-attendance/view-attendance';
+import { PermissionsPage } from './../permissions/permissions';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 
@@ -20,7 +22,8 @@ import 'rxjs/add/operator/map';
 })
 export class AttendancePage {
 
-  private attendance: FirebaseListObservable<any>
+  private attendanceItems: AngularFireList<any>;
+  private attendance: Observable<any>
   private filteredItems: Array<any>;
   private searchTerm: String;
 
@@ -30,9 +33,10 @@ export class AttendancePage {
     private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController) {
 
-    this.attendance = db.list('/attendance').map((agendas) => {
-      return agendas.reverse();
-    }) as FirebaseListObservable<any>;
+    this.attendanceItems = db.list('/attendance');
+    this.attendance = this.attendanceItems.snapshotChanges().map((attendance) => {
+      return attendance.reverse();
+    })
 
     this.searchTerm = '';
     this.getFilteredItems();
@@ -51,6 +55,11 @@ export class AttendancePage {
           text: 'Asistencia',
           handler: () => {
             this.navCtrl.push(NewAttendancePage);
+          }
+        }, {
+          text: 'Asignar permisos',
+          handler: () => {
+            this.navCtrl.push(PermissionsPage);
           }
         }, {
           text: 'Cancelar',
@@ -73,7 +82,7 @@ export class AttendancePage {
   getFilteredItems() {
     let seachTerm = this.searchTerm
     // use subscribe and foreach for filtering
-    this.attendance.subscribe((_items) => {
+    this.attendanceItems.valueChanges().subscribe((_items:any) => {
       this.filteredItems = [];
       _items.forEach(item => {
         if (item.date && item.typeMetting) {

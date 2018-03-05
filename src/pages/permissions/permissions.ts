@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 /**
  * Generated class for the PermissionsPage page.
@@ -14,11 +16,25 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class PermissionsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private permForm: FormGroup;
+  private users: AngularFireList<any>;
+
+  constructor(private db: AngularFireDatabase, 
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private formBuilder: FormBuilder) {
+
+      this.users = db.list('/users');
+      this.permForm = this.formBuilder.group({
+        uid: ['', Validators.required],
+        role: ['', Validators.required]
+      });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PermissionsPage');
+  ionViewDidLoad() {}
+  
+  changeRole() {
+
   }
 
 }

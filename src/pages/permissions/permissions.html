@@ -5,14 +5,32 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Permissions</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Cambiar rol</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  <form [formGroup]="permForm" (ngSubmit)="changeRole()">
+    <ion-item>
+      <ion-label stacked>
+        Joven/lider
+      </ion-label>
+      <ion-select formControlName="uid">
+        <ion-option *ngFor="let user of users | async" value="{{user.uid}}">{{user.name}} {{user.lastName}}</ion-option>
+      </ion-select>
+    </ion-item>
 
+    <ion-item>
+      <ion-label floating>Asignar Rol</ion-label>
+      <ion-select formControlName="role">
+        <ion-option value="joven">Joven</ion-option>
+        <ion-option value="presidente">Presidente</ion-option>
+        <ion-option value="lider">Lider</ion-option>
+        <ion-option value="obispo">Obispo</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <button ion-button type="submit" [disabled]="!permForm.valid">Asignar permisos</button>
+  </form>
 </ion-content>

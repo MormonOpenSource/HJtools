@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth'
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { TabsPage } from '../tabs/tabs';
 
 /**
@@ -19,7 +19,7 @@ import { TabsPage } from '../tabs/tabs';
 export class RegisterPage {
 
   private register: FormGroup;
-  private newUser: FirebaseListObservable<any>;
+  private newUser: AngularFireList<any>;
   loading;
 
   constructor(private db: AngularFireDatabase,

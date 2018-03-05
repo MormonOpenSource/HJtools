@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { TabsPage } from '../tabs/tabs'
 import { AttendancePersonPage } from '../attendance-person/attendance-person';
 
@@ -18,7 +18,7 @@ import { AttendancePersonPage } from '../attendance-person/attendance-person';
 })
 export class NewAttendancePage {
   private attendance: FormGroup;
-  private newAttendance: FirebaseListObservable<any>;
+  private newAttendance: AngularFireList<any>;
   private listAttendance:Array<any>;
 
   constructor(public navCtrl: NavController,
