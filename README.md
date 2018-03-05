@@ -16,11 +16,11 @@ The main purpose of this app is to organize the general meetings, goals, thought
 * Authentication for Young men and leaders
 * Assign user to a ward and stake
 * Role permissions to edit and delete depending on user
+* logout and delete session
 
 ## TODO
 * Update attendance
 * forgot password workflow
-* logout and delete session
 
 
 ## How to use this template

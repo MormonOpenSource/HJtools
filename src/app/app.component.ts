@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth'
 import { TabsPage } from './../pages/tabs/tabs';
+import { Storage } from '@ionic/storage';
 
 import { LoginPage } from '../pages/login/login';
 
@@ -16,7 +17,8 @@ export class MyApp {
   constructor(platform: Platform, 
     statusBar: StatusBar, 
     splashScreen: SplashScreen,
-    private fire: AngularFireAuth) {
+    private fire: AngularFireAuth,
+    private storage: Storage) {
       platform.ready().then(() => {
         // Okay, so the platform is ready and our plugins are available.
         // Here you can do any higher level native things you might need.
@@ -33,5 +35,15 @@ export class MyApp {
           }
         });
     });
-  }   
+  }
+
+  logout() {
+    this.fire.auth.signOut().then(() => {
+      this.storage.remove('userData');
+      this.rootPage = LoginPage;
+      window.location.reload();
+    }).catch((e) => {
+      console.error(e)
+    })
+  }
 }
