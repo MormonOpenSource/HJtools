@@ -4,7 +4,6 @@ import { ViewAgendasPage } from '../view-agendas/view-agendas';
 import { UpdateAgendaPage } from '../update-agenda/update-agenda'
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth'
 import { NewAttendancePage } from '../new-attendance/new-attendance';
 import { NewAgendaPage } from '../new-agenda/new-agenda';
@@ -30,6 +29,8 @@ export class AgendasPage {
   private filteredItems: Array<any>;
   private searchTerm: String;
   private buttonsNewEntry: Array<any>;
+  private userDataQuery: AngularFireList<any>;
+  private userData: Observable<any[]>;
 
 
   constructor(public navCtrl: NavController,
@@ -57,23 +58,24 @@ export class AgendasPage {
         handler: () => {
 
         }
-      },
-      {
-        text: 'Asignar permisos',
-        handler: () => {
-          this.navCtrl.push(PermissionsPage);
-        }
-      }
+      }      
     ]
     var user = this.fire.auth.currentUser;
-    /* if (user) {
-      db.object('/users', { query: { equalTo: {value: user.uid, key: 'uid'} }})
-        .subscribe((_items) => {
-        console.log(_items)
-        })
-      //if()
-      //this.navCtrl.setRoot(TabsPage);
-    } */
+    if (user) {
+      this.userDataQuery = db.list('users', ref => ref.orderByChild('uid').equalTo(user.uid))
+      this.userDataQuery.valueChanges().subscribe((data:any) => {
+        // add give permissions options by role validated
+        if (data[0].role == 'obispo') {
+          this.buttonsNewEntry.push({
+            text: 'Asignar permisos',
+            handler: () => {
+              this.navCtrl.push(PermissionsPage);
+            }
+          })
+        }
+      })
+      
+    }
     this.agendasItems = db.list('/agendas');
     this.agendas = this.agendasItems.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));

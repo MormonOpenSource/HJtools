@@ -22,10 +22,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { ReversePipe } from '../pipes/reverse-list.pipe'
 import { ConfigSecret } from  '../config/config-secret'
 import * as firebaseConfigJson from '../config/config-secret.json'
+
 
 export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson; 
 
@@ -51,6 +53,7 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule.enablePersistence(),
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],

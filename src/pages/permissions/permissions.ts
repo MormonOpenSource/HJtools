@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the PermissionsPage page.
@@ -17,14 +18,16 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 export class PermissionsPage {
 
   private permForm: FormGroup;
-  private users: AngularFireList<any>;
+  private usersQuery: AngularFireList<any>;
+  private users: Observable<any[]>;
 
   constructor(private db: AngularFireDatabase, 
     public navCtrl: NavController, 
     public navParams: NavParams, 
     private formBuilder: FormBuilder) {
 
-      this.users = db.list('/users');
+      this.usersQuery = db.list('/users');
+      this.users = this.usersQuery.valueChanges()
       this.permForm = this.formBuilder.group({
         uid: ['', Validators.required],
         role: ['', Validators.required]
