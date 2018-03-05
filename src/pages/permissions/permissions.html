@@ -16,18 +16,41 @@
       <ion-label stacked>
         Joven/lider
       </ion-label>
-      <ion-select formControlName="uid">
+      <ion-select formControlName="uid" (ngModelChange)="onChangeUser($event)">
         <ion-option *ngFor="let user of users | async" value="{{user.uid}}">{{user.name}} {{user.lastName}}</ion-option>
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="permForm.value.role !== ''">
       <ion-label floating>Asignar Rol</ion-label>
       <ion-select formControlName="role">
         <ion-option value="joven">Joven</ion-option>
         <ion-option value="presidente">Presidente</ion-option>
         <ion-option value="lider">Lider</ion-option>
         <ion-option value="obispo">Obispo</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="permForm.value.stake !== ''">
+      <ion-label stacked>
+        Estaca
+      </ion-label>
+      <ion-select formControlName="stake">
+        <ion-option value="bogota">Bogotá</ion-option>
+      </ion-select>
+    </ion-item>
+    
+    <ion-item *ngIf="permForm.value.ward !== ''">
+      <ion-label stacked>
+        Barrio
+      </ion-label>
+      <ion-select formControlName="ward">
+        <ion-option value="federman">Federman</ion-option>
+        <ion-option value="alhambra">Alhambra</ion-option>
+        <ion-option value="niza">Niza</ion-option>
+        <ion-option value="tierralinda">Tierra linda</ion-option>
+        <ion-option value="nogal">Nogal</ion-option>
+        <ion-option value="sanluis">San luis</ion-option>
       </ion-select>
     </ion-item>
 
