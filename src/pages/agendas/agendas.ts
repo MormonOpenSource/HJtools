@@ -5,6 +5,7 @@ import { UpdateAgendaPage } from '../update-agenda/update-agenda'
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth'
+import { Storage } from '@ionic/storage';
 import { NewAttendancePage } from '../new-attendance/new-attendance';
 import { NewAgendaPage } from '../new-agenda/new-agenda';
 import { PermissionsPage } from './../permissions/permissions';
@@ -39,7 +40,8 @@ export class AgendasPage {
     private db: AngularFireDatabase,
     private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
-    private fire: AngularFireAuth) {
+    private fire: AngularFireAuth,
+    private storage: Storage) {
 
     this.buttonsNewEntry = [
       {
@@ -67,6 +69,7 @@ export class AgendasPage {
       this.userDataQuery.valueChanges().subscribe((data:any) => {
         // save user data
         this.userInstanceData = data[0];
+        storage.set('userData', JSON.stringify(this.userInstanceData));
         // load list with filtering 
         this.searchTerm = '';
         this.getFilteredItems()

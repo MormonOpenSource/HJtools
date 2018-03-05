@@ -23,6 +23,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { ReversePipe } from '../pipes/reverse-list.pipe'
 import { ConfigSecret } from  '../config/config-secret'
@@ -52,6 +53,7 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     AngularFireDatabaseModule,

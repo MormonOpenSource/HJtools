@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController, NavController, AlertController, ActionSheetController } from 'ionic-angular';
 import { AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { Storage } from '@ionic/storage';
 import { NewAttendancePage } from '../new-attendance/new-attendance';
 import { NewAgendaPage } from '../new-agenda/new-agenda';
 import { ViewAttendancePage } from '../view-attendance/view-attendance';
@@ -26,12 +27,19 @@ export class AttendancePage {
   private attendance: Observable<any>
   private filteredItems: Array<any>;
   private searchTerm: String;
+  private userInstanceData: any;
 
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
     private db: AngularFireDatabase,
     private alertCtrl: AlertController,
-    private actionSheetCtrl: ActionSheetController) {
+    private actionSheetCtrl: ActionSheetController,
+    private storage: Storage) {
+    
+    // get user data from localstorage
+    storage.get('userData').then((user) => {
+      this.userInstanceData = JSON.parse(user);
+    });
 
     this.attendanceItems = db.list('/attendance');
     this.attendance = this.attendanceItems.snapshotChanges().map(changes => {
@@ -74,6 +82,11 @@ export class AttendancePage {
       ]
     });
     actionSheet.present();
+  }
+
+  validatePermissions(): boolean {
+    let rolesAllowed = ['obispo', 'lider', 'presidente']
+    return rolesAllowed.indexOf(this.userInstanceData.role) > -1;
   }
 
   attendanceSelected(attendance): void {

@@ -25,7 +25,7 @@
         <h2>{{ attendance.date }}</h2>
         <h3>{{ attendance.typeMetting }}</h3>
       </ion-item>
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="validatePermissions()">
         <button ion-button color="danger" (click)="deleteattendance(attendance.key)">
           <ion-icon name="md-trash"> Eliminar</ion-icon>
         </button>
