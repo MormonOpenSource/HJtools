@@ -20,7 +20,10 @@
     <ion-label floating>Contraseña</ion-label>
     <ion-input type="password" [(ngModel)]="user.password"></ion-input>
   </ion-item>
-
-  <button ion-button (click)="login(user)">Login</button>
-  <button ion-button color="light" (click)="register()">Registro</button>
+  <div class="buttons">
+    <button ion-button (click)="login(user)">Login</button>
+    <button ion-button color="light" (click)="register()">Registro</button>
+  </div>  
+  <br>
+  <a (click)="recoverPassword()">Olvidé mi contraseña</a>
 </ion-content>

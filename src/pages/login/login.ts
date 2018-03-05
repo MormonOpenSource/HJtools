@@ -4,6 +4,7 @@ import { NavController, NavParams, LoadingController, AlertController } from 'io
 import { AngularFireAuth } from 'angularfire2/auth'
 import { UserLogin } from '../../interfaces/user-login'
 import { RegisterPage } from '../register/register';
+import { ResetPasswordPage } from './../reset-password/reset-password';
 
 /**
  * Generated class for the LoginPage page.
@@ -21,12 +22,13 @@ export class LoginPage {
   user = {} as UserLogin;
   loading;
 
-  constructor(private fire: AngularFireAuth,
+  constructor(
+    private fire: AngularFireAuth,
     public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController) {
-  }
+    public alertCtrl: AlertController
+  ) {  }
 
   ionViewDidLoad() {}
 
@@ -64,6 +66,10 @@ export class LoginPage {
 
   register() {
     this.navCtrl.push(RegisterPage)
+  }
+
+  recoverPassword() {
+    this.navCtrl.push(ResetPasswordPage)
   }
 
 }

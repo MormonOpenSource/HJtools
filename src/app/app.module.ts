@@ -16,6 +16,7 @@ import { ViewAttendancePage } from '../pages/view-attendance/view-attendance';
 import { LoginPage } from './../pages/login/login';
 import { RegisterPage } from './../pages/register/register';
 import { PermissionsPage } from './../pages/permissions/permissions';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -48,7 +49,8 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     ViewAttendancePage,
     LoginPage,
     RegisterPage,
-    PermissionsPage
+    PermissionsPage,
+    ResetPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ export const firebaseConfig:ConfigSecret = <any> firebaseConfigJson;
     ViewAttendancePage,
     LoginPage,
     RegisterPage,
-    PermissionsPage
+    PermissionsPage,
+    ResetPasswordPage
   ],
   providers: [
     StatusBar,

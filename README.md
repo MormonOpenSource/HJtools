@@ -17,10 +17,10 @@ The main purpose of this app is to organize the general meetings, goals, thought
 * Assign user to a ward and stake
 * Role permissions to edit and delete depending on user
 * logout and delete session
+* forgot password workflow
 
 ## TODO
 * Update attendance
-* forgot password workflow
 
 
 ## How to use this template
