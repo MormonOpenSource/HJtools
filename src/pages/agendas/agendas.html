@@ -23,12 +23,12 @@
         <h2><strong>{{ agenda?.tituloClase }}</strong></h2>
         <h4>{{ agenda?.fecha }} - {{agenda?.tipoAgenda}}</h4>        
       </ion-item>
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="validatePermissions()">
         <button ion-button color="secondary" (click)="editAgenda(agenda)">
           <ion-icon name="md-create"> Editar</ion-icon>
         </button>
       </ion-item-options>
-      <ion-item-options side="left">
+      <ion-item-options side="left" *ngIf="validatePermissions()">
         <button ion-button color="danger" (click)="deleteAgenda(agenda.key)">
           <ion-icon name="md-trash"> Eliminar</ion-icon>
         </button>

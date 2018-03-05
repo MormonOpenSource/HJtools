@@ -31,6 +31,7 @@ export class AgendasPage {
   private buttonsNewEntry: Array<any>;
   private userDataQuery: AngularFireList<any>;
   private userData: Observable<any[]>;
+  private userInstanceData: any;
 
 
   constructor(public navCtrl: NavController,
@@ -64,6 +65,11 @@ export class AgendasPage {
     if (user) {
       this.userDataQuery = db.list('users', ref => ref.orderByChild('uid').equalTo(user.uid))
       this.userDataQuery.valueChanges().subscribe((data:any) => {
+        // save user data
+        this.userInstanceData = data[0];
+        // load list with filtering 
+        this.searchTerm = '';
+        this.getFilteredItems()
         // add give permissions options by role validated
         if (data[0].role == 'obispo') {
           this.buttonsNewEntry.push({
@@ -81,10 +87,12 @@ export class AgendasPage {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     }).map((agendas) => {
       return agendas.reverse();
-    }) 
+    })     
+  }
 
-    this.searchTerm = '';
-    this.getFilteredItems()
+  validatePermissions(): boolean {
+    let rolesAllowed = ['obispo', 'lider', 'presidente']
+    return rolesAllowed.indexOf(this.userInstanceData.role) > -1;
   }
 
   newEntry(): void {
