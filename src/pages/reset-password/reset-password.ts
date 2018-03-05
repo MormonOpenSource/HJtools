@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { NavController, AlertController } from 'ionic-angular';
+import { FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth'
 
