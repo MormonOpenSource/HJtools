@@ -15,10 +15,12 @@ The main purpose of this app is to organize the general meetings, goals, thought
 * Search filter for agendas and attendance list
 * Authentication for Young men and leaders
 * Assign user to a ward and stake
+* Role permissions to edit and delete depending on user
 
 ## TODO
 * Update attendance
-* Role permissions to edit and delete depending on user
+* forgot password workflow
+* logout and delete session
 
 
 ## How to use this template
