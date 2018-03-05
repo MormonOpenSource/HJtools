@@ -75,10 +75,11 @@ export class AgendasPage {
       //this.navCtrl.setRoot(TabsPage);
     } */
     this.agendasItems = db.list('/agendas');
-    this.agendas = this.agendasItems.snapshotChanges().map((agendas) => {
+    this.agendas = this.agendasItems.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    }).map((agendas) => {
       return agendas.reverse();
-    })
-
+    }) 
 
     this.searchTerm = '';
     this.getFilteredItems()
@@ -129,10 +130,10 @@ export class AgendasPage {
 
   getFilteredItems() {
     let seachTerm = this.searchTerm
-    // use subscribe and foreach for filtering
-    this.agendasItems.valueChanges().subscribe((_items:any) => {
+    // use subscribe and foreach for filtering    
+    this.agendas.forEach((_items:any) => {
       this.filteredItems = [];
-      _items.forEach(item => {
+      _items.forEach(item => {        
         if (item.tipoAgenda) {
           let validAgendaType = item.tipoAgenda.toLowerCase().indexOf(seachTerm.toLowerCase()) > -1;
           let validDate = item.fecha.toLowerCase().indexOf(seachTerm.toLowerCase()) > -1;
@@ -143,6 +144,4 @@ export class AgendasPage {
       })
     });
   }
-
-
 }

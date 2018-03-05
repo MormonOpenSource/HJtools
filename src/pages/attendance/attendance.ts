@@ -34,7 +34,10 @@ export class AttendancePage {
     private actionSheetCtrl: ActionSheetController) {
 
     this.attendanceItems = db.list('/attendance');
-    this.attendance = this.attendanceItems.snapshotChanges().map((attendance) => {
+    this.attendance = this.attendanceItems.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    })
+    .map((attendance) => {
       return attendance.reverse();
     })
 
@@ -79,10 +82,33 @@ export class AttendancePage {
     });
   }
 
+  deleteattendance(agendaId): void {
+    let alert = this.alertCtrl.create({
+      title: 'Eliminar asistencia',
+      message: '¿Estas seguro que quieres eliminar esta asistencia?',
+      buttons: [
+        {
+          text: 'cancelar',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'eliminar',
+          handler: () => {
+            this.attendanceItems.remove(agendaId);
+          }
+        }
+      ]
+    })
+    alert.present()
+  }
+
   getFilteredItems() {
     let seachTerm = this.searchTerm
     // use subscribe and foreach for filtering
-    this.attendanceItems.valueChanges().subscribe((_items:any) => {
+    this.attendance.forEach((_items: any) => {
       this.filteredItems = [];
       _items.forEach(item => {
         if (item.date && item.typeMetting) {

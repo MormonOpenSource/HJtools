@@ -25,7 +25,7 @@ export class UpdateAgendaPage {
     private formBuilder: FormBuilder, 
     private db: AngularFireDatabase) {
 
-    this.agendas = db.list('/agendas');
+    this.agendas = db.list('agendas');
     this.agendaSelected = this.navParams.get('agenda');
     this.agenda = this.formBuilder.group({
       tipoAgenda: [this.agendaSelected.tipoAgenda, Validators.required],
@@ -51,7 +51,7 @@ export class UpdateAgendaPage {
   }
 
   updateAgenda():void {
-    this.agendas.update(this.agendaSelected.$key, this.agenda.value)
+    this.agendas.update(this.agendaSelected.key, this.agenda.value)
     this.navCtrl.pop();
   }
 
