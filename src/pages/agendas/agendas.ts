@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController, AlertController, ActionSheetController } from 'ionic-angular';
+import { ModalController, NavController, AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { ViewAgendasPage } from '../view-agendas/view-agendas';
 import { UpdateAgendaPage } from '../update-agenda/update-agenda'
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
@@ -33,15 +33,19 @@ export class AgendasPage {
   private userDataQuery: AngularFireList<any>;
   private userData: Observable<any[]>;
   private userInstanceData: any;
+  loading;
 
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     private modalCtrl: ModalController,
     private db: AngularFireDatabase,
     private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
     private fire: AngularFireAuth,
-    private storage: Storage) {
+    private storage: Storage,
+    public loadingCtrl: LoadingController
+  ) {
 
     this.buttonsNewEntry = [
       {
@@ -61,41 +65,54 @@ export class AgendasPage {
         handler: () => {
 
         }
-      }      
-    ]
-    var user = this.fire.auth.currentUser;
-    if (user) {
-      this.userDataQuery = db.list('users', ref => ref.orderByChild('uid').equalTo(user.uid))
-      this.userDataQuery.valueChanges().subscribe((data:any) => {
-        // save user data
-        this.userInstanceData = data[0];
-        storage.set('userData', JSON.stringify(this.userInstanceData));
-        // load list with filtering 
-        this.searchTerm = '';
-        this.getFilteredItems()
-        // add give permissions options by role validated
-        if (data[0].role == 'obispo') {
-          this.buttonsNewEntry.push({
-            text: 'Asignar permisos',
-            handler: () => {
-              this.navCtrl.push(PermissionsPage);
-            }
-          })
-        }
-      })
-      
-    }
-    this.agendasItems = db.list('/agendas');
+      }
+    ];
+    this.createLoader();
+    this.loading.present().then(() => {
+      var user = this.fire.auth.currentUser;
+      if (user) {
+        this.userDataQuery = db.list('users', ref => ref.orderByChild('uid').equalTo(user.uid))
+        this.userDataQuery.valueChanges().subscribe((data: any) => {
+          // save user data
+          this.userInstanceData = data[0];
+          storage.set('userData', JSON.stringify(this.userInstanceData));
+          this.initilizeAgendas();
+          // load list with filtering 
+          this.searchTerm = '';
+          this.getFilteredItems();
+          this.loading.dismiss();
+          // add give permissions options by role validated
+          if (data[0].role == 'obispo') {
+            this.buttonsNewEntry.push({
+              text: 'Asignar permisos',
+              handler: () => {
+                this.navCtrl.push(PermissionsPage);
+              }
+            })
+          }
+        })
+      }
+    })
+  }
+
+  initilizeAgendas() {
+    this.agendasItems = this.db.list('/agendas');
     this.agendas = this.agendasItems.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     }).map((agendas) => {
       return agendas.reverse();
-    })     
+    })
   }
 
   validatePermissions(): boolean {
     let rolesAllowed = ['obispo', 'lider', 'presidente']
     return rolesAllowed.indexOf(this.userInstanceData.role) > -1;
+  }
+
+  createLoader(message: string = "Por favor espera...") { // Optional Parameter
+    this.loading = this.loadingCtrl.create({
+      content: message
+    });
   }
 
   newEntry(): void {
@@ -144,9 +161,9 @@ export class AgendasPage {
   getFilteredItems() {
     let seachTerm = this.searchTerm
     // use subscribe and foreach for filtering    
-    this.agendas.forEach((_items:any) => {
+    this.agendas.forEach((_items: any) => {
       this.filteredItems = [];
-      _items.forEach(item => {        
+      _items.forEach(item => {
         if (item.tipoAgenda) {
           let validAgendaType = item.tipoAgenda.toLowerCase().indexOf(seachTerm.toLowerCase()) > -1;
           let validDate = item.fecha.toLowerCase().indexOf(seachTerm.toLowerCase()) > -1;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController, AlertController, ActionSheetController } from 'ionic-angular';
-import { AngularFireDatabase, AngularFireList} from 'angularfire2/database';
+import { ModalController, NavController, AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
 import { NewAttendancePage } from '../new-attendance/new-attendance';
@@ -28,29 +28,36 @@ export class AttendancePage {
   private filteredItems: Array<any>;
   private searchTerm: String;
   private userInstanceData: any;
+  loading
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     private modalCtrl: ModalController,
     private db: AngularFireDatabase,
     private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
-    private storage: Storage) {
-    
-    // get user data from localstorage
-    storage.get('userData').then((user) => {
-      this.userInstanceData = JSON.parse(user);
+    private storage: Storage,
+    public loadingCtrl: LoadingController
+  ) {
+    this.createLoader();
+    this.loading.present().then(() => {
+      // get user data from localstorage
+      storage.get('userData').then((user) => {
+        this.userInstanceData = JSON.parse(user);
+      });
+
+      this.attendanceItems = db.list('/attendance');
+      this.attendance = this.attendanceItems.snapshotChanges().map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      })
+        .map((attendance) => {
+          return attendance.reverse();
+        })
+
+      this.searchTerm = '';
+      this.getFilteredItems();
+      this.loading.dismiss();
     });
-
-    this.attendanceItems = db.list('/attendance');
-    this.attendance = this.attendanceItems.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    })
-    .map((attendance) => {
-      return attendance.reverse();
-    })
-
-    this.searchTerm = '';
-    this.getFilteredItems();
   }
 
   newEntry() {
@@ -60,7 +67,7 @@ export class AttendancePage {
         {
           text: 'Agenda',
           handler: () => {
-            this.navCtrl.push(NewAgendaPage); 
+            this.navCtrl.push(NewAgendaPage);
           }
         }, {
           text: 'Asistencia',
@@ -76,7 +83,7 @@ export class AttendancePage {
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            
+
           }
         }
       ]
@@ -87,6 +94,12 @@ export class AttendancePage {
   validatePermissions(): boolean {
     let rolesAllowed = ['obispo', 'lider', 'presidente']
     return rolesAllowed.indexOf(this.userInstanceData.role) > -1;
+  }
+
+  createLoader(message: string = "Por favor espera...") { // Optional Parameter
+    this.loading = this.loadingCtrl.create({
+      content: message
+    });
   }
 
   attendanceSelected(attendance): void {
