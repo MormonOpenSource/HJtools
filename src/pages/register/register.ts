@@ -62,7 +62,7 @@ export class RegisterPage {
     this.createLoader();
     this.loading.present().then(() => {
       this.fire.auth.createUserWithEmailAndPassword(
-        this.register.value.email,
+        this.register.value.email.trim(),
         this.register.value.password
       ).then((registeredUser) => {
         if (registeredUser) {

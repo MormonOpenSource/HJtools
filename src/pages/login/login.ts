@@ -50,7 +50,7 @@ export class LoginPage {
   login(user: UserLogin) {
     this.createLoader();
     this.loading.present().then(() => {
-      this.fire.auth.signInWithEmailAndPassword(user.email, user.password)
+      this.fire.auth.signInWithEmailAndPassword(user.email.trim(), user.password.trim())
         .then((result) => {
           this.loading.dismiss();
           if (result) {
